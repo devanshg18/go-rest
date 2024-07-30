@@ -14,19 +14,17 @@ type EmployeeRepo struct {
 }
 
 // InsertEmployee inserts a new employee into the MongoDB collection
-func (r *EmployeeRepo) InsertEmployee(emp *models.Employee) (interface{}, error) {
-	result, err := r.MongoCollection.InsertOne(context.Background(), emp)
+func (r *EmployeeRepo) InsertEmployee(ctx context.Context, emp *models.Employee) (*mongo.InsertOneResult, error) {
+	result, err := r.MongoCollection.InsertOne(ctx, emp)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("failed to insert employee: %w", err)
 	}
-	return result.InsertedID, nil // Return the inserted ID
+	return result, nil // Return the result directly
 }
 
 // FindEmployeeByID retrieves an employee by their ID
 func (r *EmployeeRepo) FindEmployeeByID(empID string) (*models.Employee, error) {
 	var emp models.Employee
-
-	// Use bson.D{{Key: "employeeID", Value: empID}} to find by employee ID
 	err := r.MongoCollection.FindOne(context.Background(), bson.D{{Key: "employeeID", Value: empID}}).Decode(&emp)
 	if err != nil {
 		return nil, err

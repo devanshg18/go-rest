@@ -2,10 +2,15 @@ module github.com/devanshg18/go-rest
 
 go 1.22.3
 
-require go.mongodb.org/mongo-driver v1.16.0
+require (
+	github.com/google/uuid v1.6.0
+	go.mongodb.org/mongo-driver v1.16.0
+)
 
 require (
 	github.com/golang/snappy v0.0.4 // indirect
+	github.com/gorilla/mux v1.8.1
+	github.com/joho/godotenv v1.5.1
 	github.com/klauspost/compress v1.13.6 // indirect
 	github.com/montanaflynn/stats v0.7.1 // indirect
 	github.com/xdg-go/pbkdf2 v1.0.0 // indirect
